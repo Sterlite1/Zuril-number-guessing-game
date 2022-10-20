@@ -35,41 +35,47 @@ async function guess(max = 2) {
     if (playerGuess === correctNum) {
       isCorrect = true
       player.level = player.level + 1
+      player.point = player.point + 1
       console.log(`\n${player.name}, you got the number correct, the correct number is ${correctNum}`)
-      return;
     }
-    console.log(`${player.name}, Your guess was wrong, please try again...`)
+       else if (playerGuess > correctNum) {
+        console.log(`\n${player.name}, Your guess is too High! please try again...`)
+       }
+      else 
+  
+        console.log(`\n${player.name}, Your guess is too low, please try again...`)
+     }
   }
-}
+    
 
-// IIFE -> Run immediately on execution
-(async () => {
-  try {
-    console.log('Enter "exit" in the prompt or use Ctrl + C, to quit\n')
+      // IIFE -> Run immediately on execution
+      (async () => {
+        try {
+          console.log('Enter "exit" in the prompt or use Ctrl + C, to quit\n')
 
-    // prompt user for input
-    const userName = await prompt('please enter your name: ')
-    const user = /\S/.test(userName) ? userName : "Player"
+          // prompt user for input
+          const userName = await prompt('please enter your name: ')
+          const user = /\S/.test(userName) ? userName : "Player"
 
-    // set player name
-    player.name = user
+          // set player name
+          player.name = user
 
-    console.log(`\nWelcome ${player.name}!`)
+          console.log(`\nWelcome ${player.name}!`)
 
-    while (player.isGameOn) {
-      console.log(`\n${player.name}, you are playing level \n${player.level}, Point ${player.point}\n`)
-      await guess(player.level + 1)(player.point + 1)
-    }
+          while (player.isGameOn) {
+            console.log(`\n${player.name}, you are playing level \n${player.level}, Point ${player.point}\n`)
+            await guess(player.level + 1), (player.point + 1)
+          }
 
-    rl.close()
-  } catch (error) {
-    console.error("Unable to prompt", error);
-  }
-})()
+          rl.close()
+        } catch (error) {
+          console.error("Unable to prompt", error);
+        }
+      })()
 
-// 
-rl.on('close', () => {
-  console.log(`\nGame Over\n${player.name}, you reached level ${player.level}\n`)
-  process.exit(0)
-}
-);
+      // 
+      rl.on('close', () => {
+        console.log(`\nGame Over\n${player.name}, you reached level ${player.level}\n`)
+        process.exit(0)
+      }
+      );
